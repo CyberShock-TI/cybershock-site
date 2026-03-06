@@ -87,5 +87,7 @@ o cuando no hay logo subido */
   font-size: 12px;
   margin-top: 6px; /* <-- antes estaba en 2px, probá 6–8px */
 }
-
+/* Ocultar el <img> del logo si no tenemos imagen real */
+.logo{
+  display: none !important;
 }
