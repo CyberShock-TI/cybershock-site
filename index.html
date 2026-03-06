@@ -17,22 +17,26 @@
   <link rel="icon" type="image/png" href="img/favicon.png" />
 </head>
 <body>
+  <!-- Header / Navbar -->
   <header class="navbar">
-    <div class="container nav-content"> 
+    <div class="container nav-content">
       <a class="brand" href="#">
         <img class="logo" src="img/logo.png" alt="CyberShock logo" />
-        <span>CyberShock</span>
+        <span class="brand-text">
+          <strong>CyberShock</strong>
+          <small>Soluciones Informáticas</small>
+        </span>
       </a>
       <nav class="nav-links">
         <a href="#servicios">Servicios</a>
-        <a href="#trabajos">Trabajos</a>
-        <a href="#precios">Precios</a>
+        <!-- Eliminados: Trabajos y Precios -->
         <a href="#contacto">Contacto</a>
       </nav>
       <a class="btn-primary" href="https://wa.me/5491133435552?text=Hola,%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">WhatsApp</a>
     </div>
   </header>
 
+  <!-- Hero -->
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-text">
@@ -42,7 +46,7 @@
           optimización, backup, cambio de disco a SSD y más.
         </p>
         <div class="hero-cta">
-          <a class="btn-primary" href="https://wa.me/5491133435552?text=Hola,%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Pedir presupuesto</a>
+          <a class="btn-primary" href="https://wa.me/5491133435552?text=Hola,%20quiero%20un%20presupuesto" target="_blank" rel="noopener">Pedir presupuesto</a>
           <a class="btn-secondary" href="#servicios">Ver servicios</a>
         </div>
         <ul class="hero-badges">
@@ -56,6 +60,7 @@
     </div>
   </section>
 
+  <!-- Servicios -->
   <section id="servicios" class="section">
     <div class="container">
       <h2>Servicios</h2>
@@ -88,56 +93,9 @@
     </div>
   </section>
 
-  <section id="trabajos" class="section section-alt">
-    <div class="container">
-      <h2>Trabajos recientes</h2>
-      <div class="grid-gallery">
-        <img src="img/trabajos/1.jpg" alt="Trabajo 1" />
-        <img src="img/trabajos/2.jpg" alt="Trabajo 2" />
-        <img src="img/trabajos/3.jpg" alt="Trabajo 3" />
-        <img src="img/trabajos/4.jpg" alt="Trabajo 4" />
-        <img src="img/trabajos/5.jpg" alt="Trabajo 5" />
-        <img src="img/trabajos/6.jpg" alt="Trabajo 6" />
-      </div>
-    </div>
-  </section>
+  <!-- Eliminadas por pedido: TRABAJOS y PRECIOS -->
 
-  <section id="precios" class="section">
-    <div class="container">
-      <h2>Precios orientativos</h2>
-      <div class="pricing">
-        <div class="price-card">
-          <h3>Formateo Windows</h3>
-          <p class="price">$<span id="precio-formateo">0</span></p>
-          <ul>
-            <li>Instalación + drivers</li>
-            <li>Programas básicos</li>
-            <li>Optimización</li>
-          </ul>
-        </div>
-        <div class="price-card">
-          <h3>Limpieza completa</h3>
-          <p class="price">$<span id="precio-limpieza">0</span></p>
-          <ul>
-            <li>Limpieza interna</li>
-            <li>Pasta térmica</li>
-            <li>Chequeo general</li>
-          </ul>
-        </div>
-        <div class="price-card">
-          <h3>Migración a SSD</h3>
-          <p class="price">$<span id="precio-ssd">0</span></p>
-          <ul>
-            <li>Clonado de disco</li>
-            <li>Instalación SSD (no incluido)</li>
-            <li>Verificación</li>
-          </ul>
-        </div>
-      </div>
-      <p class="note">*Precios orientativos, pueden variar según diagnóstico.</p>
-    </div>
-  </section>
-
+  <!-- Contacto -->
   <section id="contacto" class="section section-alt">
     <div class="container contact-grid">
       <div>
@@ -145,18 +103,22 @@
         <ul class="contact-list">
           <li>📍 San Miguel, Buenos Aires</li>
           <li>📞 <a href="tel:+5491133435552">+54 9 11 3343-5552</a></li>
-          <li>✉️ <a href="mailto:contacto@cybershock.ar">contacto@cybershock.ar</a></li>
+          <!-- Eliminado: correo visible -->
           <li>🕐 Lunes a Sábados, 9 a 19 hs</li>
           <li>⭐ <a href="https://business.google.com/v/_/AKsrIN2W3paynsySa7uuPW8Pq1HXrYmSk01utOpdtL-6qRfbFSH1hGc/9ff0/_?exp=1778401&myads=1" target="_blank" rel="noopener">Ver en Google</a></li>
         </ul>
         <div class="contact-cta">
-          <a class="btn-primary" href="https://wa.me/5491133435552?text=Hola,%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribime por WhatsApp</a>
+          <a class="btn-primary" href="https://wa.me/5491133435552?text=Hola,%20quiero%20coordinar%20una%20visita" target="_blank" rel="noopener">Escribime por WhatsApp</a>
           <a class="btn-secondary" href="https://business.google.com/v/_/AKsrIN2W3paynsySa7uuPW8Pq1HXrYmSk01utOpdtL-6qRfbFSH1hGc/9ff0/_?exp=1778401&myads=1" target="_blank" rel="noopener">Ver en Google</a>
         </div>
       </div>
 
-      <form class="contact-form" name="contacto" method="POST" data-netlify="true">
-        <input type="hidden" name="form-name" value="contacto" />
+      <!-- FORMULARIO: envía a tu email vía Formspree -->
+      <!-- IMPORTANTE: reemplazar FORM_ID por el tuyo (abajo explico cómo obtenerlo) -->
+      <form class="contact-form" action="https://formspree.io/f/FORM_ID" method="POST" accept-charset="UTF-8">
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde la web - CyberShock" />
+        <input type="hidden" name="_language" value="es" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
         <label>
           Nombre
           <input type="text" name="nombre" required />
