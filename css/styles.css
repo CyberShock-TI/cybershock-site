@@ -70,5 +70,22 @@ o cuando no hay logo subido */
 .brand-text{ display:flex; flex-direction:column; line-height:1.05; }
 .brand-text strong{ font-weight:800; }
 .brand-text small{ color:var(--muted); font-weight:600; font-size:12px; margin-top:2px; }
+  /* Subtítulo bajo el nombre de marca (más separado) */
+.brand-text{
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+.brand-text strong{
+  font-weight: 800;
+}
+
+/* Aumentamos el espacio respecto a "CyberShock" */
+.brand-text small{
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 12px;
+  margin-top: 6px; /* <-- antes estaba en 2px, probá 6–8px */
+}
 
 }
