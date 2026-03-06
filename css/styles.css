@@ -46,3 +46,12 @@ h2{font-size:clamp(22px,3.4vw,34px);margin:0 0 18px}
 .footer a{color:#c6ccda;text-decoration:none;margin-left:12px}
 .footer a:hover{color:var(--text)}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.cards,.grid-gallery,.pricing,.contact-grid{grid-template-columns:1fr}}
+/* === HERO SIN IMAGEN === */
+.hero-grid{
+  grid-template-columns: 1fr;           /* una sola columna */
+  text-align: center;                    /* centrar texto */
+  justify-items: center;                 /* centrar contenido */
+}
+.hero-media{ display: none; }            /* oculta el cuadro/imagen */
+.hero-text .hero-cta{ justify-content: center; }  /* centra los botones */
+.hero-badges{ justify-content: center; }          /* centra los badges */
