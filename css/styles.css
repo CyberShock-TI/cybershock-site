@@ -91,3 +91,18 @@ o cuando no hay logo subido */
 .logo{
   display: none !important;
 }
+/* Subtítulo bajo el nombre de marca (más separado) */
+.brand-text{
+  display:flex;
+  flex-direction:column;
+  line-height:1.05;
+}
+.brand-text strong{ font-weight:800; }
+.brand-text small{
+  color: var(--muted);
+  font-weight:600;
+  font-size:12px;
+  margin-top: 8px;   /* probá 6–10px según te guste */
+}
+  /* Ocultar el <img> del logo si no hay imagen real */
+.logo{ display:none !important; }
