@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CyberShock | Soluciones Informáticas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080b0f;
+      --surface: #0e1117;
+      --surface2: #141820;
+      --border: #1c2130;
+      --accent: #00e5ff;
+      --accent2: #ff3d00;
+      --accent3: #f59e0b;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --radius: 12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: .5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 68px;
+      background: rgba(8,11,15,.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.25rem;
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .logo-icon {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 8px;
+      display: grid; place-items: center;
+      font-size: .9rem;
+    }
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+      font-size: .88rem; color: var(--muted);
+    }
+    .nav-links a:hover { color: var(--text); transition: color .2s; }
+
+    .nav-cta {
+      background: var(--accent); color: #000;
+      font-weight: 700; font-size: .85rem;
+      padding: .5rem 1.3rem; border-radius: 6px;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-cta:hover { opacity: .85; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 5vw 5rem;
+      position: relative;
+    }
+
+    /* Grid lines background */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(0,229,255,.1) 0%, transparent 65%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,61,0,.08) 0%, transparent 70%);
+      top: 25%; right: 5%;
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(0,229,255,.07);
+      border: 1px solid rgba(0,229,255,.2);
+      color: var(--accent);
+      font-size: .78rem; font-weight: 600; letter-spacing: .05em;
+      padding: .35rem 1rem; border-radius: 99px;
+      margin-bottom: 1.75rem;
+      animation: fadeUp .6s ease both;
+      text-transform: uppercase;
+    }
+    .badge::before { content: '●'; font-size: .45rem; animation: blink 1.5s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 6.5vw, 5.5rem);
+      font-weight: 800; line-height: 1.02;
+      max-width: 860px;
+      animation: fadeUp .7s .1s ease both;
+      position: relative; z-index: 1;
+    }
+    h1 .hl { color: var(--accent); }
+    h1 .hl2 {
+      -webkit-text-stroke: 1.5px var(--accent2);
+      color: transparent;
+    }
+
+    .hero-sub {
+      margin-top: 1.4rem;
+      font-size: 1.1rem; color: var(--muted);
+      max-width: 520px; line-height: 1.7;
+      animation: fadeUp .7s .2s ease both;
+      position: relative; z-index: 1;
+    }
+
+    .hero-btns {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp .7s .3s ease both;
+      position: relative; z-index: 1;
+    }
+
+    .btn-primary {
+      background: var(--accent); color: #000;
+      font-weight: 700; font-size: .95rem;
+      padding: .85rem 2rem; border-radius: 8px;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 0 28px rgba(0,229,255,.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 42px rgba(0,229,255,.5); }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border); color: var(--text);
+      font-weight: 500; font-size: .95rem;
+      padding: .85rem 2rem; border-radius: 8px;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); background: rgba(0,229,255,.05); }
+
+    .hero-stats {
+      margin-top: 4.5rem;
+      display: flex; gap: 3.5rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp .7s .4s ease both;
+      position: relative; z-index: 1;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem; font-weight: 800; color: var(--accent);
+    }
+    .stat-label { font-size: .78rem; color: var(--muted); margin-top: .2rem; letter-spacing: .03em; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 5.5rem 5vw; }
+    .section-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .18em;
+      color: var(--accent); text-transform: uppercase; margin-bottom: .75rem;
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+      font-weight: 700; line-height: 1.12;
+    }
+    .section-desc { color: var(--muted); margin-top: .75rem; max-width: 520px; line-height: 1.7; }
+
+    /* ── SERVICES ── */
+    .services { background: var(--surface); }
+    .services-header { text-align: center; margin-bottom: 3.5rem; }
+    .services-header .section-desc { margin: .75rem auto 0; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem; max-width: 1200px; margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.9rem;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .35s;
+    }
+    .service-card:hover {
+      border-color: rgba(0,229,255,.25);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(0,0,0,.4);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 50px; height: 50px;
+      background: rgba(0,229,255,.08);
+      border-radius: 12px;
+      display: grid; place-items: center;
+      font-size: 1.5rem; margin-bottom: 1.2rem;
+    }
+    .service-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 700; margin-bottom: .55rem;
+    }
+    .service-card p { font-size: .875rem; color: var(--muted); line-height: 1.65; }
+    .service-tag {
+      display: inline-block; margin-top: 1.1rem;
+      font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+      padding: .28rem .7rem; border-radius: 99px;
+      background: rgba(0,229,255,.08); color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-inner { max-width: 1200px; margin: 0 auto; }
+    .how-header { margin-bottom: 3.5rem; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+    }
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.5rem; font-weight: 800;
+      color: var(--border); line-height: 1; margin-bottom: .75rem;
+    }
+    .step h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
+    .step p { font-size: .875rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--surface); }
+    .testimonials-header { text-align: center; margin-bottom: 3.5rem; }
+    .testimonials-header .section-desc { margin: .75rem auto 0; }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem; max-width: 1200px; margin: 0 auto;
+    }
+
+    .tcard {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.9rem;
+    }
+    .stars { color: var(--accent3); font-size: .95rem; margin-bottom: 1rem; }
+    .tcard p { font-size: .88rem; color: var(--muted); line-height: 1.7; font-style: italic; }
+    .tcard-author {
+      margin-top: 1.35rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: grid; place-items: center;
+      font-weight: 800; font-size: .82rem; color: #000;
+      flex-shrink: 0;
+    }
+    .author-info .name { font-weight: 600; font-size: .9rem; }
+    .author-info .role { font-size: .77rem; color: var(--muted); }
+
+    /* ── PRICING ── */
+    .pricing-header { text-align: center; margin-bottom: 3.5rem; }
+    .pricing-header .section-desc { margin: .75rem auto 0; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem; max-width: 1000px; margin: 0 auto;
+    }
+    .price-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.1rem; position: relative;
+    }
+    .price-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 50px rgba(0,229,255,.12);
+    }
+    .featured-badge {
+      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: #000;
+      font-weight: 800; font-size: .7rem; letter-spacing: .08em;
+      padding: .3rem 1rem; border-radius: 99px; text-transform: uppercase;
+    }
+    .price-plan { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: .5rem; }
+    .price-amount {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.6rem; font-weight: 800; color: var(--accent); line-height: 1;
+    }
+    .price-amount span { font-size: 1rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    .price-desc { font-size: .84rem; color: var(--muted); margin: .5rem 0 1.35rem; line-height: 1.5; }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: .65rem; margin-bottom: 1.75rem; }
+    .price-features li { font-size: .875rem; display: flex; align-items: center; gap: .55rem; }
+    .price-features li::before { content: '✓'; color: var(--accent); font-weight: 800; }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--surface); }
+    .contact-inner { max-width: 620px; margin: 0 auto; text-align: center; }
+    .contact-inner h2 { margin-bottom: .75rem; }
+    .contact-inner .section-desc { margin: 0 auto 2rem; }
+
+    .contact-methods {
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .contact-method {
+      display: flex; align-items: center; gap: .6rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .75rem 1.25rem;
+      font-size: .88rem;
+      transition: border-color .2s;
+    }
+    .contact-method:hover { border-color: var(--accent); }
+    .contact-method .icon { font-size: 1.1rem; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; text-align: left; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label { font-size: .78rem; color: var(--muted); margin-bottom: .3rem; display: block; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+    input, textarea, select {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      padding: .75rem 1rem;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0,229,255,.08);
+    }
+    select option { background: var(--surface2); }
+    textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      background: var(--accent); color: #000;
+      font-weight: 800; font-size: .95rem; letter-spacing: .03em;
+      padding: .9rem; border: none; border-radius: 8px;
+      cursor: pointer; transition: opacity .2s, transform .2s;
+      width: 100%;
+    }
+    .form-submit:hover { opacity: .85; transform: translateY(-1px); }
+
+    /* ── MAP ── */
+    .map-section { padding: 0 5vw 5rem; }
+    .map-inner { max-width: 1000px; margin: 0 auto; }
+    .map-wrapper {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      height: 320px;
+    }
+    .map-wrapper iframe { width: 100%; height: 100%; border: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3.5rem 5vw 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-top {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer-brand p { font-size: .85rem; color: var(--muted); margin-top: .8rem; max-width: 260px; line-height: 1.65; }
+    .footer-links h4 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .88rem; margin-bottom: .85rem; color: var(--text);
+    }
+    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-links li a { font-size: .84rem; color: var(--muted); transition: color .2s; }
+    .footer-links li a:hover { color: var(--accent); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+      font-size: .78rem; color: var(--muted);
+    }
+    .footer-bottom a { color: var(--accent); }
+
+    /* whatsapp float */
+    .wa-float {
+      position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 200;
+      background: #25d366; color: #fff;
+      width: 56px; height: 56px; border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 1.6rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,.4);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,.55); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-stats { gap: 1.75rem; }
+      .contact-methods { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/541133435552" target="_blank" class="wa-float" title="Chateá por WhatsApp">💬</a>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    Cyber<span>Shock</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#como-funciona">Cómo Funciona</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/541133435552" target="_blank" class="nav-cta">WhatsApp</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="badge">San Miguel, Buenos Aires — Servicio Local</div>
+
+  <h1>
+    <span class="hl2">Rápido</span>, confiable,<br/>
+    <span class="hl">sin vueltas.</span>
+  </h1>
+
+  <p class="hero-sub">
+    CyberShock es tu solución informática en San Miguel. Reparamos equipos, configuramos redes y te damos soporte técnico cuando más lo necesitás.
+  </p>
+
+  <div class="hero-btns">
+    <a href="https://wa.me/541133435552" target="_blank" class="btn-primary">💬 Escribinos por WhatsApp</a>
+    <a href="#servicios" class="btn-secondary">Ver Servicios</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">+500</div>
+      <div class="stat-label">Clientes Atendidos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Problemas Resueltos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">&lt;2h</div>
+      <div class="stat-label">Tiempo de Respuesta</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">San Miguel</div>
+      <div class="stat-label">Buenos Aires</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div class="services-header reveal">
+    <div class="section-label">Nuestros Servicios</div>
+    <h2>Todo lo que tu tecnología necesita</h2>
+    <p class="section-desc">Desde reparaciones urgentes hasta soporte continuo, CyberShock te cubre en San Miguel y alrededores.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🖥️</div>
+      <h3>Reparación de PCs y Laptops</h3>
+      <p>Diagnóstico completo y reparación de hardware y software. Cambio de pantallas, teclados, baterías, formateos y más.</p>
+      <span class="service-tag">Hardware &amp; Software</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🌐</div>
+      <h3>Redes e Infraestructura</h3>
+      <p>Instalación y configuración de redes locales, WiFi, routers, switches y toda la infraestructura para tu hogar o empresa.</p>
+      <span class="service-tag">Networking</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📱</div>
+      <h3>Soporte Técnico Remoto</h3>
+      <p>Asistencia en tiempo real desde donde estés. Resolvemos tu problema sin que tengas que mover un dedo.</p>
+      <span class="service-tag">Remoto 24/7</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔒</div>
+      <h3>Seguridad Informática</h3>
+      <p>Eliminación de virus, malware y ransomware. Protegemos tu información y tus dispositivos de amenazas digitales.</p>
+      <span class="service-tag">Ciberseguridad</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="como-funciona">
+  <div class="how-inner">
+    <div class="how-header reveal">
+      <div class="section-label">Proceso</div>
+      <h2>Así de simple trabajamos</h2>
+      <p class="section-desc">En 4 pasos tendrás tu problema resuelto, sin complicaciones.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <h3>Contacto Inicial</h3>
+        <p>Escribinos por WhatsApp o completá el formulario. Describí tu problema y evaluamos la urgencia.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <h3>Diagnóstico Gratuito</h3>
+        <p>Realizamos un diagnóstico completo sin costo. Te explicamos qué ocurre y cómo lo vamos a resolver.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <h3>Presupuesto Claro</h3>
+        <p>Recibís un presupuesto detallado y transparente. Sin sorpresas ni costos ocultos.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <h3>Solución &amp; Seguimiento</h3>
+        <p>Resolvemos el problema y hacemos seguimiento para asegurarnos de que todo funcione perfecto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonios">
+  <div class="testimonials-header reveal">
+    <div class="section-label">Testimonios</div>
+    <h2>Lo que dicen nuestros clientes</h2>
+    <p class="section-desc">Vecinos y empresas de San Miguel que confían en CyberShock.</p>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="tcard reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Me salvaron la laptop un lunes a la mañana antes de una reunión importante. En menos de una hora me la dejaron como nueva. Super recomendables."</p>
+      <div class="tcard-author">
+        <div class="avatar">ML</div>
+        <div class="author-info">
+          <div class="name">Marcos López</div>
+          <div class="role">Contador, San Miguel</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Configuraron toda la red de mi local en un día. Excelente trabajo, muy prolijo y con explicación de todo. Ya los recomendé a varios conocidos."</p>
+      <div class="tcard-author">
+        <div class="avatar">VR</div>
+        <div class="author-info">
+          <div class="name">Valeria Romero</div>
+          <div class="role">Dueña de Negocio, Del Viso</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Tenía un virus que me bloqueó todo. Me lo resolvieron de forma remota en menos de una hora. Muy rápidos y atentos. 10 puntos."</p>
+      <div class="tcard-author">
+        <div class="avatar">CA</div>
+        <div class="author-info">
+          <div class="name">Carlos Álvarez</div>
+          <div class="role">Particular, San Miguel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="precios">
+  <div class="pricing-header reveal">
+    <div class="section-label">Precios</div>
+    <h2>Planes para cada necesidad</h2>
+    <p class="section-desc">Elegí el plan que mejor se adapta o consultanos por un servicio puntual.</p>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-plan">Servicio Puntual</div>
+      <div class="price-amount">A consultar</div>
+      <p class="price-desc">Para reparaciones y soluciones únicas sin compromiso.</p>
+      <ul class="price-features">
+        <li>Diagnóstico gratuito</li>
+        <li>Presupuesto sin cargo</li>
+        <li>Soporte remoto o presencial</li>
+        <li>Garantía del servicio</li>
+      </ul>
+      <a href="https://wa.me/541133435552" target="_blank" class="btn-secondary" style="display:block;text-align:center;padding:.8rem;">Consultar</a>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="featured-badge">MÁS ELEGIDO</div>
+      <div class="price-plan">Mantenimiento Mensual</div>
+      <div class="price-amount">A consultar</div>
+      <p class="price-desc">Para hogares y pequeñas empresas que quieren tranquilidad todo el mes.</p>
+      <ul class="price-features">
+        <li>Soporte remoto ilimitado</li>
+        <li>Tiempo de respuesta prioritario</li>
+        <li>Mantenimiento mensual incluido</li>
+        <li>Control de seguridad</li>
+        <li>Hasta 3 equipos</li>
+      </ul>
+      <a href="https://wa.me/541133435552" target="_blank" class="btn-primary" style="display:block;text-align:center;padding:.8rem;">Consultar por WhatsApp</a>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-plan">Plan Empresa</div>
+      <div class="price-amount">A consultar</div>
+      <p class="price-desc">Soluciones a medida para negocios y empresas de la zona.</p>
+      <ul class="price-features">
+        <li>Soporte remoto + presencial</li>
+        <li>Equipos ilimitados</li>
+        <li>Gestión de red completa</li>
+        <li>Seguridad avanzada</li>
+        <li>Respuesta en menos de 2hs</li>
+      </ul>
+      <a href="https://wa.me/541133435552" target="_blank" class="btn-secondary" style="display:block;text-align:center;padding:.8rem;">Contactar</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <div class="contact-inner">
+    <div class="section-label">Contacto</div>
+    <h2>¿Necesitás ayuda ahora?</h2>
+    <p class="section-desc">Escribinos por WhatsApp o completá el formulario. Te respondemos rápido.</p>
+
+    <div class="contact-methods">
+      <a href="https://wa.me/541133435552" target="_blank" class="contact-method">
+        <span class="icon">💬</span> WhatsApp: 11 3343-5552
+      </a>
+      <div class="contact-method">
+        <span class="icon">📍</span> Vicente López 1761, San Miguel
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-row">
+        <div>
+          <label>Nombre completo</label>
+          <input type="text" placeholder="Juan Pérez"/>
+        </div>
+        <div>
+          <label>Teléfono / WhatsApp</label>
+          <input type="tel" placeholder="11 0000-0000"/>
+        </div>
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" placeholder="juan@email.com"/>
+      </div>
+      <div>
+        <label>Tipo de servicio</label>
+        <select>
+          <option>Seleccionar servicio...</option>
+          <option>Reparación de PC o Laptop</option>
+          <option>Redes e Infraestructura</option>
+          <option>Soporte Técnico Remoto</option>
+          <option>Seguridad Informática</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div>
+        <label>Descripción del problema</label>
+        <textarea placeholder="Contanos brevemente qué te está pasando..."></textarea>
+      </div>
+      <button class="form-submit">Enviar Consulta →</button>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<div class="map-section">
+  <div class="map-inner reveal">
+    <div class="map-wrapper">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3291.0!2d-58.7134!3d-34.5408!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVicente+L%C3%B3pez+1761%2C+San+Miguel%2C+Buenos+Aires!5e0!3m2!1ses!2sar!4v1"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        Cyber<span style="color:var(--accent)">Shock</span>
+      </div>
+      <p>Soluciones informáticas en San Miguel. Rápido, confiable, sin vueltas.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="#servicios">Reparación de PCs y Laptops</a></li>
+        <li><a href="#servicios">Redes e Infraestructura</a></li>
+        <li><a href="#servicios">Soporte Técnico Remoto</a></li>
+        <li><a href="#servicios">Seguridad Informática</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="https://wa.me/541133435552">💬 11 3343-5552 (WhatsApp)</a></li>
+        <li><a href="#">📍 Vicente López 1761, San Miguel</a></li>
+        <li><a href="#">🗺️ Ver en Google Maps</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 CyberShock Soluciones Informáticas. San Miguel, Buenos Aires.</span>
+    <span>Hecho con ❤️ en Argentina</span>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelector('.form-submit').addEventListener('click', function() {
+    this.textContent = '✓ Consulta Enviada — Te respondemos pronto!';
+    this.style.background = '#10b981';
+    setTimeout(() => {
+      this.textContent = 'Enviar Consulta →';
+      this.style.background = '';
+    }, 3500);
+  });
+</script>
+</body>
+</html>
